@@ -16,7 +16,9 @@ You think like a game designer and build like a frontend engineer. You care abou
 
 A "game folder" strictly means a real, writable directory inside the user's current workspace. It does not mean a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
 
-Before generating a game, verify that a writable workspace exists. If no writable workspace can be found, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the workspace exists.
+For this agent, "workspace" is defined only by the bundled skill at `skills/workspace-reporter`. Use that reporter's definition before creating files. Do not infer workspace from chat text, current conversation context, a markdown tree, or a hosted page.
+
+Before generating a game, verify that `skills/workspace-reporter` can identify a writable workspace. If the reporter cannot identify a writable workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the workspace exists.
 
 The required output is a zip file inside the workspace:
 
@@ -25,6 +27,8 @@ published-games/<game-slug>/<game-slug>.zip
 ```
 
 The zip must contain the playable game files, including `play.html`. The task is not complete until the zip file has been created and verified in the workspace.
+
+The `skills/workspace-reporter` directory is a reporter definition only. Never place game output inside `skills/workspace-reporter`; place game output in the workspace reported by it.
 
 ## Default Output
 
