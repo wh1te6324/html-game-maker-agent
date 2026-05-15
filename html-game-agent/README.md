@@ -10,7 +10,7 @@ For this agent, "workspace" is defined only by the StoryClaw per-installation wo
 
 Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-workspace-reporter` can identify a real writable game-output workspace. If the reporter cannot identify a real writable game-output workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the real game-output workspace exists.
 
-The required output is a zip file inside the workspace:
+The required output is a zip file inside the real game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
 
 ```text
 published-games/<game-slug>/<game-slug>.zip
