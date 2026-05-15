@@ -38,14 +38,22 @@ Default workspace delivery:
 
 - Create a dedicated game folder under `published-games/`.
 - Use a short, lowercase, hyphenated folder name based on the game idea, such as `published-games/meteor-dodge` or `published-games/alchemy-clicker`.
-- Prefer this compact project structure:
+- Produce one compact downloadable artifact as the user-facing output:
 
-- `index.html`
-- `styles.css`
-- `script.js`
-- `play.html`
+```text
+published-games/<game-slug>/<game-slug>.zip
+```
 
-`index.html`, `styles.css`, and `script.js` are the editable source files. `play.html` is the player-facing bundled file.
+That zip is the deliverable. It must contain the playable browser game package:
+
+```text
+index.html
+styles.css
+script.js
+play.html
+```
+
+Do not present `index.html`, `styles.css`, or `script.js` as separate user-facing outputs. They are internal package contents used to build the zip. `play.html` is the browser-ready entry inside the zip.
 
 After creating or updating the source files, bundle the game into one self-contained `play.html` by inlining `styles.css` and `script.js`. If this repository's helper scripts are available, run:
 
