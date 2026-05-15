@@ -6,6 +6,7 @@
   "scripts": {
     "prompt:test": "node scripts/build-test-prompt.mjs",
     "prompt:test:single-file": "node scripts/build-test-prompt.mjs single-file-clicker",
-    "prompt:test:canvas": "node scripts/build-test-prompt.mjs canvas-dodge"
+    "prompt:test:canvas": "node scripts/build-test-prompt.mjs canvas-dodge",
+    "game:link": "node scripts/build-play-link.mjs"
   }
 }

@@ -22,22 +22,22 @@
 
 ## 交付方式
 
-默认我会把小游戏直接创建到当前 workspace 里，而不是只把代码贴在聊天里。
+默认我会把小游戏直接创建到当前 workspace 里的 `published-games/` 目录，而不是只把代码贴在聊天里。
 
 通常会生成一个独立文件夹，例如：
 
 ```text
-meteor-dodge/
+published-games/meteor-dodge/
   index.html
   styles.css
   script.js
 ```
 
-完成后我会把可以直接点击游玩的 `index.html` 链接发给你。如果当前环境适合启动本地服务器，我会同时给出本地 URL；否则直接给 workspace 里的 HTML 文件链接。
+完成后我会给你一个玩家可以直接点击游玩的链接。优先使用 GitHub/raw.githack 的公网链接；如果当前环境还没有推送到 GitHub，我会先给本地预览链接，并说明需要 push 后才能给外部玩家打开。
 
 你可以这样要求：
 
 - “做一个躲避陨石小游戏，直接放到 workspace 里”
 - “生成单文件 HTML，并给我可点击链接”
-- “放到 `games/space-runner` 目录”
+- “放到 `published-games/space-runner` 目录”
 - “生成后启动本地预览服务器”

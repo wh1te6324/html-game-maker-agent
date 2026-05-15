@@ -59,3 +59,15 @@ Paste the compiled prompt into the model or agent runtime you want to evaluate. 
 ```bash
 node scripts/build-test-prompt.mjs your-case-name
 ```
+
+## Build A Player Link
+
+Generated games should live under `published-games/<game-slug>/` in the repository root.
+
+After committing and pushing a generated game, build a player link:
+
+```bash
+node html-game-agent/scripts/build-play-link.mjs published-games/meteor-dodge
+```
+
+The script prints a `raw.githack.com` URL that players can open directly in a browser.

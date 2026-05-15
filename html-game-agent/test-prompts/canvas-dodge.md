@@ -10,5 +10,5 @@
 - 有分数、最高分、生命值、开始、暂停、重新开始。
 - 难度会随着时间慢慢增加。
 - 视觉风格要像霓虹街机，但不要依赖外部图片。
-- 直接把游戏文件写到当前 workspace 的 `meteor-dodge/` 文件夹。
-- 完成后给我一个可以直接点击游玩的 HTML 链接。
+- 直接把游戏文件写到当前 workspace 的 `published-games/meteor-dodge/` 文件夹。
+- 完成后给我一个玩家可以直接点击游玩的 HTML 链接，优先使用 GitHub/raw.githack 公网链接。

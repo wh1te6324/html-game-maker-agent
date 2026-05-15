@@ -10,5 +10,5 @@
 - 有连击、倒计时、失败反馈、胜利反馈和重新开始。
 - 支持手机屏幕。
 - 不要使用任何外部 CDN 或图片。
-- 直接把游戏写到当前 workspace 的 `alchemy-clicker/index.html`。
-- 完成后给我一个可以直接点击游玩的 HTML 链接。
+- 直接把游戏写到当前 workspace 的 `published-games/alchemy-clicker/index.html`。
+- 完成后给我一个玩家可以直接点击游玩的 HTML 链接，优先使用 GitHub/raw.githack 公网链接。
