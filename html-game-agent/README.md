@@ -30,3 +30,32 @@ If you run the command from the parent repository:
 ```bash
 talenthub agent publish html-game-maker --dir ./html-game-agent
 ```
+
+## Test The Prompt
+
+Build a compiled prompt that combines the agent instructions with a sample user request:
+
+```bash
+npm run prompt:test
+```
+
+If npm is not available, run the script directly:
+
+```bash
+node scripts/build-test-prompt.mjs
+```
+
+The compiled prompt will be written to `tmp/canvas-dodge.compiled.md`.
+
+Other included cases:
+
+```bash
+npm run prompt:test:single-file
+npm run prompt:test:canvas
+```
+
+Paste the compiled prompt into the model or agent runtime you want to evaluate. Add more scenarios by creating Markdown files in `test-prompts/`, then run:
+
+```bash
+node scripts/build-test-prompt.mjs your-case-name
+```

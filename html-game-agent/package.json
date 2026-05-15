@@ -1,0 +1,11 @@
+{
+  "name": "html-game-maker-agent",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prompt:test": "node scripts/build-test-prompt.mjs",
+    "prompt:test:single-file": "node scripts/build-test-prompt.mjs single-file-clicker",
+    "prompt:test:canvas": "node scripts/build-test-prompt.mjs canvas-dodge"
+  }
+}
