@@ -12,4 +12,5 @@
 - 视觉风格要像霓虹街机，但不要依赖外部图片。
 - 直接把游戏文件写到当前 workspace 的 `published-games/meteor-dodge/` 文件夹。
 - 生成 `index.html`、`styles.css`、`script.js`，再打包出内联版 `play.html`。
-- 完成后给我一个玩家可以直接点击游玩的 `play.html` 链接，优先使用 GitHub/raw.githack 公网链接。
+- 完成后把 `index.html`、`styles.css`、`script.js`、`play.html` 打包成 `published-games/meteor-dodge/meteor-dodge.zip`。
+- 告诉我下载 zip，解压后打开 `play.html` 游玩。

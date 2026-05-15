@@ -12,4 +12,5 @@
 - 不要使用任何外部 CDN 或图片。
 - 直接把游戏写到当前 workspace 的 `published-games/alchemy-clicker/index.html`。
 - 同时提供 `published-games/alchemy-clicker/play.html` 作为玩家打开的稳定文件。
-- 完成后给我一个玩家可以直接点击游玩的 `play.html` 链接，优先使用 GitHub/raw.githack 公网链接。
+- 完成后把文件打包成 `published-games/alchemy-clicker/alchemy-clicker.zip`。
+- 告诉我下载 zip，解压后打开 `play.html` 游玩。

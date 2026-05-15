@@ -71,3 +71,22 @@ node html-game-agent/scripts/build-play-link.mjs published-games/meteor-dodge
 ```
 
 The script prints a `raw.githack.com` URL that players can open directly in a browser.
+
+## Package A Downloadable Game
+
+The preferred delivery artifact is now a zip file in the generated game folder.
+
+Create `play.html` and package the source files:
+
+```bash
+node html-game-agent/scripts/package-game.mjs published-games/meteor-dodge
+```
+
+The package contains:
+
+- `index.html`
+- `styles.css`
+- `script.js`
+- `play.html`
+
+Give the user the generated zip path and tell them to unzip it, then open `play.html`.
