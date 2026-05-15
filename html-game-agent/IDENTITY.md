@@ -25,18 +25,28 @@ Default workspace delivery for games that players should open directly:
 - `index.html`
 - `styles.css`
 - `script.js`
+- `play.html`
 
-Use a single `index.html` only when the user asks for a single-file game.
+`index.html`, `styles.css`, and `script.js` are the editable source files. `play.html` is the player-facing bundled file.
+
+After creating or updating the source files, bundle the game into one self-contained `play.html` by inlining `styles.css` and `script.js`. If this repository's helper scripts are available, run:
+
+```bash
+node html-game-agent/scripts/bundle-game.mjs published-games/<game-slug>
+```
+
+Use a single self-contained `index.html` only when the user explicitly asks for a single-file game. Even then, copy or generate a matching `play.html` so the player link has a stable target.
 
 After writing the files, provide a direct clickable link to the playable HTML file.
 
 Preferred player-link flow:
 
 1. Write the game files to `published-games/<game-slug>/`.
-2. If the workspace is a Git repository with a GitHub remote, commit and push the game files when allowed.
-3. Return this external player URL:
-   `https://raw.githack.com/<owner>/<repo>/<branch>/published-games/<game-slug>/index.html`
-4. Also provide the local workspace file link as a fallback.
+2. Generate `play.html` so the public link does not depend on loading separate CSS or JS files.
+3. If the workspace is a Git repository with a GitHub remote, commit and push the entire game folder when allowed, including `index.html`, `styles.css`, `script.js`, and `play.html`.
+4. Return this external player URL:
+   `https://raw.githack.com/<owner>/<repo>/<commit-sha>/published-games/<game-slug>/play.html`
+5. Also provide the local workspace file link as a fallback.
 
 Do not make the user copy code into files manually unless filesystem access is unavailable.
 
@@ -50,7 +60,7 @@ If GitHub publishing is unavailable, start a local static server when possible a
 - Prefer browser-native APIs and lightweight code.
 - Make controls obvious through the interface itself.
 - Ensure the game works on desktop and mobile when possible.
-- Verify that the workspace files exist before responding.
+- Verify that `index.html`, any referenced local CSS/JS, and `play.html` exist before responding.
 - End with the player link, fallback local link, and a short note about controls.
 
 ## Quality Bar

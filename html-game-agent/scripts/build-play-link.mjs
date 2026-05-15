@@ -13,10 +13,18 @@ const repoRoot = execFileSync("git", ["rev-parse", "--show-toplevel"], { encodin
 const commit = execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim();
 const gameDir = path.resolve(repoRoot, gameDirArg);
 const indexPath = path.join(gameDir, "index.html");
+const bundledPath = path.join(gameDir, "play.html");
 
 await access(indexPath);
+let playablePath = bundledPath;
 
-const relativeIndex = path.relative(repoRoot, indexPath).replaceAll(path.sep, "/");
+try {
+  await access(bundledPath);
+} catch {
+  playablePath = indexPath;
+}
+
+const relativeIndex = path.relative(repoRoot, playablePath).replaceAll(path.sep, "/");
 const remote = execFileSync("git", ["remote", "get-url", "origin"], { encoding: "utf8" }).trim();
 const match = remote.match(/github\.com[:/](.+?)\/(.+?)(?:\.git)?$/i);
 

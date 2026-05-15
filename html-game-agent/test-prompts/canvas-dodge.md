@@ -11,4 +11,5 @@
 - 难度会随着时间慢慢增加。
 - 视觉风格要像霓虹街机，但不要依赖外部图片。
 - 直接把游戏文件写到当前 workspace 的 `published-games/meteor-dodge/` 文件夹。
-- 完成后给我一个玩家可以直接点击游玩的 HTML 链接，优先使用 GitHub/raw.githack 公网链接。
+- 生成 `index.html`、`styles.css`、`script.js`，再打包出内联版 `play.html`。
+- 完成后给我一个玩家可以直接点击游玩的 `play.html` 链接，优先使用 GitHub/raw.githack 公网链接。

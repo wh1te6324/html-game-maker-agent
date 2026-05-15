@@ -31,9 +31,12 @@ published-games/meteor-dodge/
   index.html
   styles.css
   script.js
+  play.html
 ```
 
-完成后我会给你一个玩家可以直接点击游玩的链接。优先使用 GitHub/raw.githack 的公网链接；如果当前环境还没有推送到 GitHub，我会先给本地预览链接，并说明需要 push 后才能给外部玩家打开。
+其中 `index.html`、`styles.css`、`script.js` 是源码；`play.html` 会把 CSS 和 JS 内联进去，作为真正发给玩家的可玩文件。
+
+完成后我会给你一个玩家可以直接点击游玩的 `play.html` 链接。优先使用 GitHub/raw.githack 的公网链接；如果当前环境还没有推送到 GitHub，我会先给本地预览链接，并说明需要 push 后才能给外部玩家打开。
 
 你可以这样要求：
 

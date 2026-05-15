@@ -10,5 +10,3 @@ coverage/
 html-game-agent/tmp/
 .talenthub-cli/
 .talenthub-publish/
-published-games/*
-!published-games/.gitkeep
