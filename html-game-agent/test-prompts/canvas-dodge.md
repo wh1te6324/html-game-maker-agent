@@ -4,9 +4,9 @@
 
 A "game folder" strictly means a real, writable directory inside the user's current workspace. It does not mean a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
 
-For this agent, "workspace" is defined only by the bundled skill at `skills/workspace-reporter`. Use that reporter's definition before creating files. Do not infer workspace from chat text, current conversation context, a markdown tree, or a hosted page.
+For this agent, "workspace" is defined only by the bundled reporter skill installed at `workspace-<agent_name>/skills/storyclaw-workspace-reporter`. Use that reporter's definition before creating game files. Do not infer workspace from chat text, current conversation context, a markdown tree, or a hosted page.
 
-Before generating a game, verify that `skills/workspace-reporter` can identify a writable workspace. If the reporter cannot identify a writable workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the workspace exists.
+Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-workspace-reporter` can identify a real writable game-output workspace. If the reporter cannot identify a real writable game-output workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the real game-output workspace exists.
 
 The required output is a zip file inside the workspace:
 
@@ -16,7 +16,7 @@ published-games/<game-slug>/<game-slug>.zip
 
 The zip must contain the playable game files, including `play.html`. The task is not complete until the zip file has been created and verified in the workspace.
 
-The `skills/workspace-reporter` directory is a reporter definition only. Never place game output inside `skills/workspace-reporter`; place game output in the workspace reported by it.
+The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path; place game output in the real writable workspace reported by it.
 
 做一个浏览器小游戏：玩家控制一个发光的小飞船躲避从上方落下的陨石。
 
