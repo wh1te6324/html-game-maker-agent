@@ -22,13 +22,13 @@ talenthub login
 Then publish from this directory:
 
 ```bash
-talenthub agent publish html-game-maker --dir .
+talenthub agent publish --dir .
 ```
 
 If you run the command from the parent repository:
 
 ```bash
-talenthub agent publish html-game-maker --dir ./html-game-agent
+talenthub agent publish --dir ./html-game-agent
 ```
 
 ## Test The Prompt

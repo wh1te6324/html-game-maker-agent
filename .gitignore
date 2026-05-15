@@ -8,3 +8,5 @@ build/
 coverage/
 *.log
 html-game-agent/tmp/
+.talenthub-cli/
+.talenthub-publish/

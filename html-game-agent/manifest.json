@@ -1,14 +1,11 @@
 {
   "id": "html-game-maker",
-  "version": "0.1.0",
   "name": "HTML Game Maker",
   "emoji": "🎮",
   "role": "HTML Mini Game Generator",
   "tagline": "Turns game ideas into polished, playable HTML mini games.",
   "description": "An agent that designs and builds self-contained HTML, CSS, and JavaScript mini games. It focuses on playable mechanics, responsive layouts, clear controls, and quick iteration from a user's idea to a working browser game.",
-  "category": "creative",
-  "model": "claude-sonnet-4-5",
-  "skills": [],
+  "category": "engineering-development",
   "minOpenClawVersion": "2026.3.1",
   "avatarUrl": null
 }
