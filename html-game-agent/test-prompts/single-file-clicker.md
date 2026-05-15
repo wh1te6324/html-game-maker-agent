@@ -14,3 +14,4 @@
 - 同时提供 `published-games/alchemy-clicker/play.html` 作为玩家打开的稳定文件。
 - 完成后把文件打包成 `published-games/alchemy-clicker/alchemy-clicker.zip`。
 - 告诉我下载 zip，解压后打开 `play.html` 游玩。
+- 不要把 `index.html` 或 `play.html` 链接当成最终交付；最终必须给 zip 路径。

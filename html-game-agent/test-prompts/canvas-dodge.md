@@ -14,3 +14,4 @@
 - 生成 `index.html`、`styles.css`、`script.js`，再打包出内联版 `play.html`。
 - 完成后把 `index.html`、`styles.css`、`script.js`、`play.html` 打包成 `published-games/meteor-dodge/meteor-dodge.zip`。
 - 告诉我下载 zip，解压后打开 `play.html` 游玩。
+- 不要把 `index.html` 或 `play.html` 链接当成最终交付；最终必须给 zip 路径。

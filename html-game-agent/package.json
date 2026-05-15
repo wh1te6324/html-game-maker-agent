@@ -8,7 +8,6 @@
     "prompt:test:single-file": "node scripts/build-test-prompt.mjs single-file-clicker",
     "prompt:test:canvas": "node scripts/build-test-prompt.mjs canvas-dodge",
     "game:bundle": "node scripts/bundle-game.mjs",
-    "game:link": "node scripts/build-play-link.mjs",
     "game:zip": "node scripts/package-game.mjs"
   }
 }

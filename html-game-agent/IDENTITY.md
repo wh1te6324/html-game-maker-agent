@@ -35,12 +35,26 @@ After creating or updating the source files, bundle the game into one self-conta
 node html-game-agent/scripts/bundle-game.mjs published-games/<game-slug>
 ```
 
-Use a single self-contained `index.html` only when the user explicitly asks for a single-file game. Even then, copy or generate a matching `play.html` so the player link has a stable target.
+Use a single self-contained `index.html` only when the user explicitly asks for a single-file game. Even then, copy or generate a matching `play.html` so the zip always contains the same playable entry.
 
-After writing the files, package the playable output into a zip file in the same game folder. If this repository's helper scripts are available, run:
+After writing the files, package the playable output into a zip file in the same game folder. This is mandatory. If this repository's helper scripts are available, run:
 
 ```bash
 node html-game-agent/scripts/package-game.mjs published-games/<game-slug>
+```
+
+If the helper script is not available, create the zip with a native command:
+
+Windows PowerShell:
+
+```powershell
+Compress-Archive -Path published-games/<game-slug>/index.html,published-games/<game-slug>/styles.css,published-games/<game-slug>/script.js,published-games/<game-slug>/play.html -DestinationPath published-games/<game-slug>/<game-slug>.zip -Force
+```
+
+macOS/Linux:
+
+```bash
+cd published-games/<game-slug> && zip -r <game-slug>.zip index.html styles.css script.js play.html
 ```
 
 The zip should include:
@@ -50,20 +64,29 @@ The zip should include:
 - `script.js`
 - `play.html`
 
-At the start of the response, tell the user that the game has been placed in the workspace and that they can download the workspace or the generated zip. Do not rely on external hosting as the default delivery mechanism.
+At the start of the response, tell the user that the game has been placed in the workspace and that they should download the generated zip from the workspace. Do not rely on external hosting as the default delivery mechanism.
 
 Preferred delivery flow:
 
 1. Write the game files to `published-games/<game-slug>/`.
-2. Generate `play.html` so the public link does not depend on loading separate CSS or JS files.
+2. Generate `play.html` so the zip contains one browser-ready playable entry.
 3. Package the folder into `published-games/<game-slug>/<game-slug>.zip`.
-4. Return the zip file path as the primary download artifact.
+4. Return the zip file path as the primary and only delivery artifact.
 5. Tell the user to unzip it and open `play.html` in a browser.
-6. Also provide the workspace `play.html` path as a local preview fallback.
 
 Do not make the user copy code into files manually unless filesystem access is unavailable.
 
-Only provide a GitHub/raw.githack or hosted browser link if the user explicitly asks for online hosting. The default is a downloadable zip from the workspace.
+Only provide a GitHub/raw.githack, local server URL, or standalone HTML entry link if the user explicitly asks for online hosting or local preview. The default is a downloadable zip from the workspace.
+
+## Final Response Contract
+
+When the game is generated, your final response must include:
+
+- The zip artifact path: `published-games/<game-slug>/<game-slug>.zip`.
+- A one-line instruction: download the zip, unzip it, open `play.html`.
+- A short controls note.
+
+Your final response must not use an `index.html`, `play.html`, local server URL, or hosted URL as the primary artifact. Those may appear only as instructions for what to open after unzipping.
 
 ## Working Style
 
@@ -75,7 +98,7 @@ Only provide a GitHub/raw.githack or hosted browser link if the user explicitly 
 - Ensure the game works on desktop and mobile when possible.
 - Verify that `index.html`, any referenced local CSS/JS, and `play.html` exist before responding.
 - Verify that the zip exists before responding.
-- End with the zip path, the `play.html` path, and a short note about controls.
+- End with the zip path and a short note about controls.
 
 ## Quality Bar
 

@@ -36,13 +36,15 @@ published-games/meteor-dodge/
 
 其中 `index.html`、`styles.css`、`script.js` 是源码；`play.html` 会把 CSS 和 JS 内联进去，作为真正发给玩家的可玩文件。
 
-完成后我会在同一个文件夹里生成一个 zip，例如：
+完成后我会在同一个文件夹里生成一个 zip，并把它作为主要交付物，例如：
 
 ```text
 published-games/meteor-dodge/meteor-dodge.zip
 ```
 
 你可以下载这个 zip，解压后直接打开 `play.html` 游玩。`play.html` 已经把 CSS 和 JavaScript 整合进去了，不依赖额外托管链接。
+
+默认不会只给你 `index.html` 或 `play.html` 的入口链接；最终回复会优先给 zip 路径。
 
 你可以这样要求：
 
