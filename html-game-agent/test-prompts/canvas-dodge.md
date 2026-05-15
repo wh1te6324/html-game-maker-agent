@@ -1,5 +1,19 @@
 # Test Prompt: Canvas Dodge Game
 
+## Workspace Zip Delivery Rule
+
+A "game folder" strictly means a real, writable directory inside the user's current workspace. It does not mean a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
+
+Before generating a game, verify that a writable workspace exists. If no writable workspace can be found, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the workspace exists.
+
+The required output is a zip file inside the workspace:
+
+```text
+published-games/<game-slug>/<game-slug>.zip
+```
+
+The zip must contain the playable game files, including `play.html`. The task is not complete until the zip file has been created and verified in the workspace.
+
 做一个浏览器小游戏：玩家控制一个发光的小飞船躲避从上方落下的陨石。
 
 要求：
