@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Mini Game Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="studio-frame" aria-label="AI mini game workspace">
+        <div class="game-column">
+          <header class="brand-row">
+            <a class="brand" href="#" aria-label="AI Mini Game Lab home">
+              <span class="brand-mark">AI</span>
+              <span>
+                <strong>AI Mini Game Lab</strong>
+                <small>Agent-powered HTML games</small>
+              </span>
+            </a>
+            <div class="status-pill" aria-label="Current build status">
+              <span></span>
+              Agent plugged in
+            </div>
+          </header>
+
+          <section class="game-stage" aria-label="Playable HTML mini game">
+            <div class="game-toolbar">
+              <div>
+                <p id="stageLabel">Agent preview</p>
+                <h1 id="stageTitle">Neon Dash</h1>
+              </div>
+              <button class="ghost-button" id="resetPreviewButton" type="button">Reset demo</button>
+            </div>
+
+            <div class="preview-shell">
+              <canvas id="gameCanvas" width="960" height="540" aria-label="Neon Dash playable canvas"></canvas>
+              <iframe
+                id="gamePreview"
+                title="Generated HTML game preview"
+                sandbox="allow-scripts allow-pointer-lock"
+                hidden
+              ></iframe>
+            </div>
+
+            <div class="game-hud" aria-label="Game stats">
+              <span>Score <strong id="scoreValue">0</strong></span>
+              <span>Best <strong id="bestValue">0</strong></span>
+              <span>Speed <strong id="speedValue">1.0x</strong></span>
+            </div>
+          </section>
+        </div>
+
+        <aside class="share-panel" aria-label="Agent generation controls">
+          <div class="share-copy">
+            <p class="eyebrow">HTML Game Maker</p>
+            <h2>Prompt 直接生成到游戏区域</h2>
+            <p>
+              输入小游戏想法，页面会把 HTML Game Maker agent context 拼进请求。没有 API 配置时使用本地 mock；填入 OpenAI-compatible endpoint 后会直接调用模型并渲染结果。
+            </p>
+          </div>
+
+          <label class="field-stack" for="gamePrompt">
+            <span>Game prompt</span>
+            <textarea id="gamePrompt" rows="8">做一个浏览器小游戏：玩家控制一个发光的小飞船躲避从上方落下的陨石。使用 Canvas，支持键盘和手机触摸，有分数、最高分、生命值、开始、暂停、重新开始，霓虹街机风格，不依赖外部图片。</textarea>
+          </label>
+
+          <div class="field-grid">
+            <label class="field-stack" for="apiEndpoint">
+              <span>API endpoint</span>
+              <input id="apiEndpoint" type="url" placeholder="OpenAI-compatible chat completions URL" />
+            </label>
+            <label class="field-stack" for="modelName">
+              <span>Model</span>
+              <input id="modelName" type="text" value="gpt-4.1-mini" />
+            </label>
+          </div>
+
+          <label class="field-stack" for="apiKey">
+            <span>API key</span>
+            <input id="apiKey" type="password" placeholder="Only stored in this browser" autocomplete="off" />
+          </label>
+
+          <div class="share-actions">
+            <button class="share-button" id="copyContextButton" type="button">
+              <span class="button-icon">⧉</span>
+              Copy agent request
+            </button>
+            <button class="share-button" id="mockButton" type="button">
+              <span class="button-icon">▶</span>
+              Run local mock
+            </button>
+          </div>
+
+          <button class="generate-button" id="generateButton" type="button">Generate into game area</button>
+
+          <output class="agent-log" id="agentLog" aria-live="polite">
+            Ready. Add an endpoint for real AI generation, or run local mock.
+          </output>
+        </aside>
+      </section>
+    </main>
+
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
