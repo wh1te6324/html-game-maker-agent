@@ -11,25 +11,22 @@ Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-w
 The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
 
 ```text
-<web-workspace-root>/<game-slug>.zip
+<web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
 The zip must contain the playable game files, including `play.html`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. If the zip cannot be created and verified, stop; do not return HTML files, HTML links, source-code blocks, or fake paths.
 
-The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the StoryClaw reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path, and never place game output in the independent host workspace just because it is writable; place game output only in the web page workspace root reported by it.
+## User Request
 
 做一个浏览器小游戏：玩家控制一个发光的小飞船躲避从上方落下的陨石。
 
 要求：
 
-- 使用 `index.html`、`styles.css`、`script.js` 三个文件。
 - 使用 Canvas。
 - 支持键盘方向键和手机触摸拖动。
 - 有分数、最高分、生命值、开始、暂停、重新开始。
 - 难度会随着时间慢慢增加。
 - 视觉风格要像霓虹街机，但不要依赖外部图片。
-- 直接把游戏文件写到网页端 workspace reporter 确认的 `<web-workspace-root>/meteor-dodge/` 文件夹。
-- 生成 `index.html`、`styles.css`、`script.js`，再打包出内联版 `play.html`。
-- 完成后把 `index.html`、`styles.css`、`script.js`、`play.html` 打包成 `<web-workspace-root>/meteor-dodge.zip`。
-- 告诉我下载 zip，解压后打开 `play.html` 游玩。
-- 不要把 `index.html` 或 `play.html` 链接当成最终交付；HTML 链接没法保证独立可玩，最终必须给 zip 路径。
+- 在 `<web-workspace-root>/meteor-dodge/` 中只临时准备 `index.html`、`styles.css`、`script.js` 和 `play.html`。
+- 必须把这些文件打包成 `<web-workspace-root>/meteor-dodge/meteor-dodge.zip`。
+- 最终只输出 zip 路径。不要输出 HTML 文件、HTML 链接、源码块或散文件路径。

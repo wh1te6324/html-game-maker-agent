@@ -11,7 +11,7 @@ Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-w
 The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
 
 ```text
-<web-workspace-root>/<game-slug>.zip
+<web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
 The zip must contain the playable game files, including `play.html`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. If the zip cannot be created and verified, stop; do not return HTML files, HTML links, source-code blocks, or fake paths.
@@ -57,7 +57,7 @@ The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the Sto
 完成后我会在同一个文件夹里生成一个 zip，并把它作为主要交付物，例如：
 
 ```text
-<web-workspace-root>/meteor-dodge.zip
+<web-workspace-root>/meteor-dodge/meteor-dodge.zip
 ```
 
 你可以下载这个 zip，解压后直接打开 `play.html` 游玩。`play.html` 已经把 CSS 和 JavaScript 整合进去了，不依赖额外托管链接。

@@ -23,7 +23,7 @@ Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-w
 The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
 
 ```text
-<web-workspace-root>/<game-slug>.zip
+<web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
 The zip must contain the playable game files, including `play.html`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. The task is not complete until the zip file has been created and verified in the web workspace.
@@ -41,7 +41,7 @@ Default workspace delivery:
 - Produce one compact downloadable artifact as the user-facing output:
 
 ```text
-<web-workspace-root>/<game-slug>.zip
+<web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
 That zip is the deliverable. It must contain the playable browser game package:
@@ -63,7 +63,7 @@ node html-game-agent/scripts/bundle-game.mjs <web-workspace-root>/<game-slug>
 
 Use a single self-contained `index.html` only when the user explicitly asks for a single-file game. Even then, copy or generate a matching `play.html` so the zip always contains the same playable entry.
 
-After writing the temporary staging files, package the playable output into a zip file directly under `<web-workspace-root>`. This is mandatory. If this repository's helper scripts are available, run:
+After writing the temporary staging files, package the playable output into a zip file inside the same game folder. This is mandatory. If this repository's helper scripts are available, run:
 
 ```bash
 node html-game-agent/scripts/package-game.mjs <web-workspace-root>/<game-slug>
@@ -74,13 +74,13 @@ If the helper script is not available, create the zip with a native command:
 Windows PowerShell:
 
 ```powershell
-Compress-Archive -Path <web-workspace-root>/<game-slug>/index.html,<web-workspace-root>/<game-slug>/styles.css,<web-workspace-root>/<game-slug>/script.js,<web-workspace-root>/<game-slug>/play.html -DestinationPath <web-workspace-root>/<game-slug>.zip -Force
+Compress-Archive -Path <web-workspace-root>/<game-slug>/index.html,<web-workspace-root>/<game-slug>/styles.css,<web-workspace-root>/<game-slug>/script.js,<web-workspace-root>/<game-slug>/play.html -DestinationPath <web-workspace-root>/<game-slug>/<game-slug>.zip -Force
 ```
 
 macOS/Linux:
 
 ```bash
-cd <web-workspace-root>/<game-slug> && zip -r ../<game-slug>.zip index.html styles.css script.js play.html
+cd <web-workspace-root>/<game-slug> && zip -r <game-slug>.zip index.html styles.css script.js play.html
 ```
 
 The zip should include:
@@ -97,7 +97,7 @@ Preferred delivery flow:
 1. Ask the StoryClaw workspace reporter for the web page game-output workspace root.
 2. Use `<web-workspace-root>/<game-slug>/` only as a temporary staging folder.
 3. Generate `play.html` so the zip contains one browser-ready playable entry.
-4. Package the folder into `<web-workspace-root>/<game-slug>.zip`.
+4. Package the staging files into `<web-workspace-root>/<game-slug>/<game-slug>.zip` in the same folder.
 5. Return the zip file path as the primary and only delivery artifact.
 6. Tell the user to download the zip from the web workspace, unzip it, and open `play.html` in a browser.
 7. Do not return loose HTML/CSS/JS files. If the platform exposes temporary staging files, make clear they are not the deliverable and the zip is the only output.
@@ -111,7 +111,7 @@ Do not provide an HTML link as the answer. A raw `index.html` or `play.html` lin
 
 When the game is generated, your final response must include:
 
-- The zip artifact path: `<web-workspace-root>/<game-slug>.zip`.
+- The zip artifact path: `<web-workspace-root>/<game-slug>/<game-slug>.zip`.
 - A one-line instruction: download the zip, unzip it, open `play.html`.
 - A short controls note.
 

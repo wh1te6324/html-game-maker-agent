@@ -26,7 +26,7 @@ Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-w
 The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
 
 ```text
-<web-workspace-root>/<game-slug>.zip
+<web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
 The zip must contain the playable game files, including `play.html`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. The task is not complete until the zip file has been created and verified in the web workspace.
@@ -36,7 +36,7 @@ The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the Sto
 - A "game folder" strictly means a real, writable directory inside the web page workspace root reported by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`. It never means the agent host workspace, virtual path, chat attachment, markdown snippet, hosted page, or imagined file tree.
 - Before generating any game, confirm the writable workspace through `workspace-<agent_name>/skills/storyclaw-workspace-reporter`. If no real writable game-output workspace can be found through that reporter, stop and tell the user to download/open a workspace first; do not generate code, links, or fake file paths.
 - The required game folder location is `<web-workspace-root>/<game-slug>/`, where `<web-workspace-root>` comes from the reporter. This folder is temporary staging only, not the final output.
-- The final zip must live directly in the reported web workspace as `<web-workspace-root>/<game-slug>.zip`.
+- The final zip must live inside the same reported game folder as `<web-workspace-root>/<game-slug>/<game-slug>.zip`.
 - If you cannot create or verify the web workspace zip file, the task is not complete. Ask the user to download/open the workspace before continuing. Do not fall back to loose HTML files.
 - Prefer simple, inspectable vanilla JavaScript.
 - Use established browser APIs such as Canvas, DOM events, `requestAnimationFrame`, and local storage.
@@ -47,7 +47,7 @@ The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the Sto
 - Prefer `index.html`, `styles.css`, and `script.js` in that staging folder.
 - Bundle those source files into `play.html` before packaging.
 - If the user asks for a single-file game, create one self-contained `index.html` and also provide/copy it as `play.html`.
-- Package `index.html`, `styles.css`, `script.js`, and `play.html` into `<web-workspace-root>/<game-slug>.zip`.
+- Package `index.html`, `styles.css`, `script.js`, and `play.html` into `<web-workspace-root>/<game-slug>/<game-slug>.zip`.
 - Return the zip file as the primary and only delivery artifact so the user can download it from the workspace.
 - If zip packaging fails, stop and report the failure. Never substitute `index.html`, `play.html`, source-code blocks, or HTML links for the zip.
 - Tell the user to unzip the package and open `play.html` in a browser.
