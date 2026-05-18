@@ -1,26 +1,6 @@
 # HTML Game Maker Usage
 
-## Workspace Zip Delivery Rule
-
-A "game folder" strictly means a real, writable directory inside the web page workspace reported by the StoryClaw workspace reporter. It does not mean the agent's own independent host workspace, a local process working directory, a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
-
-For this agent, "workspace" is defined only by the installed StoryClaw workspace reporter. In current installs the reporter may be available at `workspace-<agent_name>/skills/storyclaw-workspace-reporter` or the legacy path `workspace-<agent_name>/skills/workspace-reporter`; use whichever path actually exists and can report a real writable web page workspace before creating game files. Do not infer workspace from chat text, current conversation context, a markdown tree, or a hosted page.
-
-Before generating a game, verify that the installed workspace reporter can identify a real writable game-output workspace. If the reporter cannot identify a real writable game-output workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the real game-output workspace exists.
-
-The required output is a zip file inside the real web page game-output workspace confirmed by the installed workspace reporter, not inside the agent host's local workspace and not inside any arbitrary local folder. If neither reporter path exists or the installed reporter cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
-
-```text
-<web-workspace-root>/<game-slug>/<game-slug>.zip
-```
-
-The zip must contain exactly the three playable game source files: `index.html`, `styles.css`, and `script.js`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. Do not create, describe, link, or deliver any extra browser entry file. If the zip cannot be created and verified, stop; do not return HTML files, HTML links, source-code blocks, or fake paths.
-
-The workspace reporter skill is inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path, and never place game output in the independent host workspace just because it is writable; place game output only in the web page workspace root reported by it.
-
-## How To Ask
-
-Tell me what kind of browser mini game you want. A short idea is enough, for example:
+Tell me the browser mini game you want. A short idea is enough:
 
 - Make a small asteroid dodging game.
 - Make a mobile reaction-tap game.
@@ -31,7 +11,7 @@ You can also specify rules, art direction, mobile support, sound, scoring, level
 
 ## Delivery
 
-By default, I create a temporary game folder under the web page workspace root reported by the StoryClaw workspace reporter:
+I create a temporary game folder in the real web page workspace reported by the installed workspace reporter:
 
 ```text
 <web-workspace-root>/meteor-dodge/
@@ -41,6 +21,4 @@ By default, I create a temporary game folder under the web page workspace root r
   meteor-dodge.zip
 ```
 
-Only the zip is the deliverable. The three loose files are staging contents and package contents, not separate outputs.
-
-After downloading the zip, unzip it and open `index.html` in a browser. The final response must give the zip path, not an HTML link.
+Only the zip is the deliverable. After downloading it, unzip it and open `index.html` in a browser.
