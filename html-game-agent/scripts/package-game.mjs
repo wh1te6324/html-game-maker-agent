@@ -5,11 +5,11 @@ import path from "node:path";
 const gameDirArg = process.argv[2];
 
 if (!gameDirArg) {
-  console.error("Usage: node scripts/package-game.mjs published-games/<game-slug>");
+  console.error("Usage: node scripts/package-game.mjs <web-workspace-root>/<game-slug>");
   process.exit(1);
 }
 
-const repoRoot = execFileSync("git", ["rev-parse", "--show-toplevel"], { encoding: "utf8" }).trim();
+const repoRoot = getWorkspaceRoot();
 const gameDir = path.resolve(repoRoot, gameDirArg);
 const slug = path.basename(gameDir);
 const zipPath = path.join(gameDir, `${slug}.zip`);
@@ -136,4 +136,12 @@ function crc32(buffer) {
     crc = (crc >>> 8) ^ crcTable[(crc ^ byte) & 0xff];
   }
   return (crc ^ 0xffffffff) >>> 0;
+}
+
+function getWorkspaceRoot() {
+  try {
+    return execFileSync("git", ["rev-parse", "--show-toplevel"], { encoding: "utf8" }).trim();
+  } catch {
+    return process.cwd();
+  }
 }

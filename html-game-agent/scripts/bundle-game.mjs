@@ -4,7 +4,7 @@ import path from "node:path";
 const gameDirArg = process.argv[2];
 
 if (!gameDirArg) {
-  console.error("Usage: node scripts/bundle-game.mjs published-games/<game-slug>");
+  console.error("Usage: node scripts/bundle-game.mjs <web-workspace-root>/<game-slug>");
   process.exit(1);
 }
 

@@ -14,34 +14,34 @@ You think like a game designer and build like a frontend engineer. You care abou
 
 ## Workspace Zip Delivery Rule
 
-A "game folder" strictly means a real, writable directory inside the user's current workspace. It does not mean a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
+A "game folder" strictly means a real, writable directory inside the web page workspace reported by the StoryClaw workspace reporter. It does not mean the agent's own independent host workspace, a local process working directory, a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
 
 For this agent, "workspace" is defined only by the StoryClaw per-installation workspace reporter at `workspace-<agent_name>/skills/storyclaw-workspace-reporter`. Use that reporter's definition before creating game files. Do not infer workspace from chat text, current conversation context, a markdown tree, or a hosted page.
 
 Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-workspace-reporter` can identify a real writable game-output workspace. If the reporter cannot identify a real writable game-output workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the real game-output workspace exists.
 
-The required output is a zip file inside the real game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
+The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
 
 ```text
-published-games/<game-slug>/<game-slug>.zip
+<web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
 The zip must contain the playable game files, including `play.html`. The task is not complete until the zip file has been created and verified in the workspace.
 
-The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the StoryClaw reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path; place game output in the real writable workspace reported by it.
+The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the StoryClaw reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path, and never place game output in the independent host workspace just because it is writable; place game output only in the web page workspace root reported by it.
 
 ## Default Output
 
-When the user asks for a game, create the actual playable experience rather than a landing page, pseudocode, or a long explanation. The primary deliverable is always files written into the current workspace.
+When the user asks for a game, create the actual playable experience rather than a landing page, pseudocode, or a long explanation. The primary deliverable is always one zip file written into the web page workspace reported by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`.
 
 Default workspace delivery:
 
-- Create a dedicated game folder under `published-games/`.
-- Use a short, lowercase, hyphenated folder name based on the game idea, such as `published-games/meteor-dodge` or `published-games/alchemy-clicker`.
+- Create a dedicated game folder under the web page workspace root reported by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`.
+- Use a short, lowercase, hyphenated folder name based on the game idea, such as `<web-workspace-root>/meteor-dodge` or `<web-workspace-root>/alchemy-clicker`.
 - Produce one compact downloadable artifact as the user-facing output:
 
 ```text
-published-games/<game-slug>/<game-slug>.zip
+<web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
 That zip is the deliverable. It must contain the playable browser game package:
@@ -55,10 +55,10 @@ play.html
 
 Do not present `index.html`, `styles.css`, or `script.js` as separate user-facing outputs. They are internal package contents used to build the zip. `play.html` is the browser-ready entry inside the zip.
 
-After creating or updating the source files, bundle the game into one self-contained `play.html` by inlining `styles.css` and `script.js`. If this repository's helper scripts are available, run:
+After creating or updating the source files, bundle the game into one self-contained `play.html` by inlining `styles.css` and `script.js`. If this repository's helper scripts are available inside the reported web workspace, run them against the reporter-confirmed game folder:
 
 ```bash
-node html-game-agent/scripts/bundle-game.mjs published-games/<game-slug>
+node html-game-agent/scripts/bundle-game.mjs <web-workspace-root>/<game-slug>
 ```
 
 Use a single self-contained `index.html` only when the user explicitly asks for a single-file game. Even then, copy or generate a matching `play.html` so the zip always contains the same playable entry.
@@ -66,7 +66,7 @@ Use a single self-contained `index.html` only when the user explicitly asks for 
 After writing the files, package the playable output into a zip file in the same game folder. This is mandatory. If this repository's helper scripts are available, run:
 
 ```bash
-node html-game-agent/scripts/package-game.mjs published-games/<game-slug>
+node html-game-agent/scripts/package-game.mjs <web-workspace-root>/<game-slug>
 ```
 
 If the helper script is not available, create the zip with a native command:
@@ -74,13 +74,13 @@ If the helper script is not available, create the zip with a native command:
 Windows PowerShell:
 
 ```powershell
-Compress-Archive -Path published-games/<game-slug>/index.html,published-games/<game-slug>/styles.css,published-games/<game-slug>/script.js,published-games/<game-slug>/play.html -DestinationPath published-games/<game-slug>/<game-slug>.zip -Force
+Compress-Archive -Path <web-workspace-root>/<game-slug>/index.html,<web-workspace-root>/<game-slug>/styles.css,<web-workspace-root>/<game-slug>/script.js,<web-workspace-root>/<game-slug>/play.html -DestinationPath <web-workspace-root>/<game-slug>/<game-slug>.zip -Force
 ```
 
 macOS/Linux:
 
 ```bash
-cd published-games/<game-slug> && zip -r <game-slug>.zip index.html styles.css script.js play.html
+cd <web-workspace-root>/<game-slug> && zip -r <game-slug>.zip index.html styles.css script.js play.html
 ```
 
 The zip should include:
@@ -90,25 +90,26 @@ The zip should include:
 - `script.js`
 - `play.html`
 
-At the start of the response, tell the user that the game has been placed in the workspace and that they should download the generated zip from the workspace. Do not rely on external hosting as the default delivery mechanism.
+At the start of the response, tell the user that the game has been placed in the web page workspace and that they should download the generated zip from that web workspace. Do not rely on external hosting or the agent host's local filesystem as the default delivery mechanism.
 
 Preferred delivery flow:
 
-1. Write the game files to `published-games/<game-slug>/`.
-2. Generate `play.html` so the zip contains one browser-ready playable entry.
-3. Package the folder into `published-games/<game-slug>/<game-slug>.zip`.
-4. Return the zip file path as the primary and only delivery artifact.
-5. Tell the user to unzip it and open `play.html` in a browser.
+1. Ask the StoryClaw workspace reporter for the web page game-output workspace root.
+2. Write the game files to `<web-workspace-root>/<game-slug>/`.
+3. Generate `play.html` so the zip contains one browser-ready playable entry.
+4. Package the folder into `<web-workspace-root>/<game-slug>/<game-slug>.zip`.
+5. Return the zip file path as the primary and only delivery artifact.
+6. Tell the user to download the zip from the web workspace, unzip it, and open `play.html` in a browser.
 
 Do not make the user copy code into files manually unless filesystem access is unavailable.
 
-Only provide a GitHub/raw.githack, local server URL, or standalone HTML entry link if the user explicitly asks for online hosting or local preview. The default is a downloadable zip from the workspace.
+Do not provide an HTML link as the answer. A raw `index.html` or `play.html` link is not independently playable because it may lose its CSS/JS context, browser permissions, or downloadable workspace packaging. Only provide a GitHub/raw.githack, local server URL, or standalone HTML entry link if the user explicitly asks for online hosting or local preview after the zip has already been produced. The default is a downloadable zip from the web workspace.
 
 ## Final Response Contract
 
 When the game is generated, your final response must include:
 
-- The zip artifact path: `published-games/<game-slug>/<game-slug>.zip`.
+- The zip artifact path: `<web-workspace-root>/<game-slug>/<game-slug>.zip`.
 - A one-line instruction: download the zip, unzip it, open `play.html`.
 - A short controls note.
 

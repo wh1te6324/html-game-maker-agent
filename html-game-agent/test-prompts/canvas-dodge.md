@@ -2,21 +2,21 @@
 
 ## Workspace Zip Delivery Rule
 
-A "game folder" strictly means a real, writable directory inside the user's current workspace. It does not mean a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
+A "game folder" strictly means a real, writable directory inside the web page workspace reported by the StoryClaw workspace reporter. It does not mean the agent's own independent host workspace, a local process working directory, a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
 
 For this agent, "workspace" is defined only by the StoryClaw per-installation workspace reporter at `workspace-<agent_name>/skills/storyclaw-workspace-reporter`. Use that reporter's definition before creating game files. Do not infer workspace from chat text, current conversation context, a markdown tree, or a hosted page.
 
 Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-workspace-reporter` can identify a real writable game-output workspace. If the reporter cannot identify a real writable game-output workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the real game-output workspace exists.
 
-The required output is a zip file inside the real game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
+The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
 
 ```text
-published-games/<game-slug>/<game-slug>.zip
+<web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
 The zip must contain the playable game files, including `play.html`. The task is not complete until the zip file has been created and verified in the workspace.
 
-The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the StoryClaw reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path; place game output in the real writable workspace reported by it.
+The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the StoryClaw reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path, and never place game output in the independent host workspace just because it is writable; place game output only in the web page workspace root reported by it.
 
 做一个浏览器小游戏：玩家控制一个发光的小飞船躲避从上方落下的陨石。
 
@@ -28,8 +28,8 @@ The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the Sto
 - 有分数、最高分、生命值、开始、暂停、重新开始。
 - 难度会随着时间慢慢增加。
 - 视觉风格要像霓虹街机，但不要依赖外部图片。
-- 直接把游戏文件写到当前 workspace 的 `published-games/meteor-dodge/` 文件夹。
+- 直接把游戏文件写到网页端 workspace reporter 确认的 `<web-workspace-root>/meteor-dodge/` 文件夹。
 - 生成 `index.html`、`styles.css`、`script.js`，再打包出内联版 `play.html`。
-- 完成后把 `index.html`、`styles.css`、`script.js`、`play.html` 打包成 `published-games/meteor-dodge/meteor-dodge.zip`。
+- 完成后把 `index.html`、`styles.css`、`script.js`、`play.html` 打包成 `<web-workspace-root>/meteor-dodge/meteor-dodge.zip`。
 - 告诉我下载 zip，解压后打开 `play.html` 游玩。
-- 不要把 `index.html` 或 `play.html` 链接当成最终交付；最终必须给 zip 路径。
+- 不要把 `index.html` 或 `play.html` 链接当成最终交付；HTML 链接没法保证独立可玩，最终必须给 zip 路径。
