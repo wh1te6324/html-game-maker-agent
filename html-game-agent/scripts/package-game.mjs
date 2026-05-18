@@ -12,7 +12,7 @@ if (!gameDirArg) {
 const repoRoot = getWorkspaceRoot();
 const gameDir = path.resolve(repoRoot, gameDirArg);
 const slug = path.basename(gameDir);
-const zipPath = path.join(gameDir, `${slug}.zip`);
+const zipPath = path.join(path.dirname(gameDir), `${slug}.zip`);
 const crcTable = Array.from({ length: 256 }, (_, index) => {
   let c = index;
   for (let k = 0; k < 8; k += 1) {

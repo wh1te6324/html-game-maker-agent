@@ -11,10 +11,10 @@ Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-w
 The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
 
 ```text
-<web-workspace-root>/<game-slug>/<game-slug>.zip
+<web-workspace-root>/<game-slug>.zip
 ```
 
-The zip must contain the playable game files, including `play.html`. The task is not complete until the zip file has been created and verified in the workspace.
+The zip must contain the playable game files, including `play.html`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. If the zip cannot be created and verified, stop; do not return HTML files, HTML links, source-code blocks, or fake paths.
 
 The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the StoryClaw reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path, and never place game output in the independent host workspace just because it is writable; place game output only in the web page workspace root reported by it.
 
@@ -30,6 +30,6 @@ The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the Sto
 - 视觉风格要像霓虹街机，但不要依赖外部图片。
 - 直接把游戏文件写到网页端 workspace reporter 确认的 `<web-workspace-root>/meteor-dodge/` 文件夹。
 - 生成 `index.html`、`styles.css`、`script.js`，再打包出内联版 `play.html`。
-- 完成后把 `index.html`、`styles.css`、`script.js`、`play.html` 打包成 `<web-workspace-root>/meteor-dodge/meteor-dodge.zip`。
+- 完成后把 `index.html`、`styles.css`、`script.js`、`play.html` 打包成 `<web-workspace-root>/meteor-dodge.zip`。
 - 告诉我下载 zip，解压后打开 `play.html` 游玩。
 - 不要把 `index.html` 或 `play.html` 链接当成最终交付；HTML 链接没法保证独立可玩，最终必须给 zip 路径。
