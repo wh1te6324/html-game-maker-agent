@@ -8,26 +8,27 @@ For this agent, "workspace" is defined only by the StoryClaw per-installation wo
 
 Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-workspace-reporter` can identify a real writable game-output workspace. If the reporter cannot identify a real writable game-output workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the real game-output workspace exists.
 
-The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
+The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder:
 
 ```text
 <web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
-The zip must contain the playable game files, including `play.html`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. If the zip cannot be created and verified, stop; do not return HTML files, HTML links, source-code blocks, or fake paths.
+The zip must contain exactly `index.html`, `styles.css`, and `script.js`. Do not return HTML files, HTML links, source-code blocks, loose file paths, or fake paths.
 
 ## User Request
 
-做一个单文件 HTML 小游戏，主题是“炼金术反应挑战”。
+Create a small browser game with the theme "alchemy reaction challenge".
 
-要求：
+Requirements:
 
-- 所有 HTML、CSS、JavaScript 可以先临时放进一个 staging `index.html`。
-- 玩家需要在倒计时内点击正确的元素组合来完成配方。
-- 至少 8 个配方。
-- 有连击、倒计时、失败反馈、胜利反馈和重新开始。
-- 支持手机屏幕。
-- 不要使用任何外部 CDN 或图片。
-- 在 `<web-workspace-root>/alchemy-clicker/` 中只临时准备 `index.html` 和 `play.html`。
-- 必须打包成 `<web-workspace-root>/alchemy-clicker/alchemy-clicker.zip`。
-- 最终只输出 zip 路径。不要输出 HTML 文件、HTML 链接、源码块或散文件路径。
+- The game may be implemented as a self-contained `index.html`, but the final artifact must still be a zip.
+- Also create `styles.css` and `script.js` as package files, even if they are minimal.
+- The player clicks the correct ingredient combinations before the timer ends.
+- Include at least 8 recipes.
+- Include combo, countdown, failure feedback, win feedback, and restart behavior.
+- Support mobile screens.
+- Do not use any external CDN or images.
+- Temporarily prepare only `index.html`, `styles.css`, and `script.js` in `<web-workspace-root>/alchemy-clicker/`.
+- Package those three files into `<web-workspace-root>/alchemy-clicker/alchemy-clicker.zip`.
+- Final response must output only the zip path plus a short download/unzip/open instruction.

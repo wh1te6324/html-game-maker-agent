@@ -1,5 +1,5 @@
 import { execFileSync } from "node:child_process";
-import { readdir, readFile, stat, writeFile } from "node:fs/promises";
+import { readFile, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const gameDirArg = process.argv[2];
@@ -21,23 +21,23 @@ const crcTable = Array.from({ length: 256 }, (_, index) => {
   return c >>> 0;
 });
 
-try {
-  execFileSync("node", ["html-game-agent/scripts/bundle-game.mjs", gameDirArg], {
-    cwd: repoRoot,
-    stdio: "inherit"
-  });
-} catch {
-  console.warn("Could not bundle automatically. Packaging existing files.");
+const requiredFiles = ["index.html", "styles.css", "script.js"];
+const included = requiredFiles.map((name) => path.join(gameDir, name));
+const missingFiles = [];
+
+for (const file of included) {
+  try {
+    const fileStat = await stat(file);
+    if (!fileStat.isFile()) {
+      missingFiles.push(path.basename(file));
+    }
+  } catch {
+    missingFiles.push(path.basename(file));
+  }
 }
 
-const files = await collectFiles(gameDir);
-const included = files.filter((file) => {
-  const name = path.basename(file);
-  return name !== `${slug}.zip` && ["index.html", "styles.css", "script.js", "play.html"].includes(name);
-});
-
-if (!included.some((file) => path.basename(file) === "play.html")) {
-  throw new Error("play.html is required before packaging");
+if (missingFiles.length > 0) {
+  throw new Error(`Missing required game files before packaging: ${missingFiles.join(", ")}`);
 }
 
 const zip = await createZip(
@@ -51,22 +51,6 @@ const zip = await createZip(
 
 await writeFile(zipPath, zip);
 console.log(`Packaged game zip: ${zipPath}`);
-
-async function collectFiles(dir) {
-  const entries = await readdir(dir, { withFileTypes: true });
-  const output = [];
-
-  for (const entry of entries) {
-    const fullPath = path.join(dir, entry.name);
-    if (entry.isDirectory()) {
-      output.push(...await collectFiles(fullPath));
-    } else if ((await stat(fullPath)).isFile()) {
-      output.push(fullPath);
-    }
-  }
-
-  return output;
-}
 
 async function createZip(entries) {
   const localParts = [];

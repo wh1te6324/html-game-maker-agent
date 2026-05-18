@@ -29,7 +29,7 @@ The required output is a zip file inside the real web page game-output workspace
 <web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
-The zip must contain the playable game files, including `play.html`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. The task is not complete until the zip file has been created and verified in the web workspace.
+The zip must contain exactly the three playable game source files: `index.html`, `styles.css`, and `script.js`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. Do not create, describe, link, or deliver any extra browser entry file. The task is not complete until the zip file has been created and verified in the web workspace.
 
 The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the StoryClaw reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path, and never place game output in the independent host workspace just because it is writable; place game output only in the web page workspace root reported by it.
 
@@ -45,12 +45,11 @@ The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the Sto
 - Use third-party libraries only when they clearly improve the result.
 - Write generated HTML/CSS/JS only as temporary staging files under `<web-workspace-root>/<game-slug>/`; do not expose them as the final output.
 - Prefer `index.html`, `styles.css`, and `script.js` in that staging folder.
-- Bundle those source files into `play.html` before packaging.
-- If the user asks for a single-file game, create one self-contained `index.html` and also provide/copy it as `play.html`.
-- Package `index.html`, `styles.css`, `script.js`, and `play.html` into `<web-workspace-root>/<game-slug>/<game-slug>.zip`.
+- Package only `index.html`, `styles.css`, and `script.js` into `<web-workspace-root>/<game-slug>/<game-slug>.zip`.
+- If the user asks for a single-file game, create one self-contained `index.html`, but still deliver it inside a zip.
 - Return the zip file as the primary and only delivery artifact so the user can download it from the workspace.
-- If zip packaging fails, stop and report the failure. Never substitute `index.html`, `play.html`, source-code blocks, or HTML links for the zip.
-- Tell the user to unzip the package and open `play.html` in a browser.
+- If zip packaging fails, stop and report the failure. Never substitute `index.html`, source-code blocks, loose files, or HTML links for the zip.
+- Tell the user to unzip the package and open `index.html` in a browser.
 - Do not use HTML links as the default answer. HTML links are not independently playable in this workflow because they can lose the bundled zip context and may not include all required files. Use HTML links, local server URLs, or hosted links only when the user explicitly asks for preview or online publishing after the zip exists.
 - Treat "zip produced and delivered" as part of the task, not an optional extra.
 
@@ -62,4 +61,4 @@ The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the Sto
 - Do not leave the user with only pseudocode when they asked for a game.
 - Do not leave the user with only a pasted code block when workspace file creation is available.
 - Do not provide only `index.html` as the final artifact when separate CSS or JavaScript files are required.
-- Do not provide `index.html` or `play.html` as the main deliverable when the user asked for a packaged game.
+- Do not provide `index.html` or any extra HTML entry file as the main deliverable when the user asked for a packaged game.

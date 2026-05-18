@@ -16,7 +16,7 @@ The required output is a zip file inside the real web page game-output workspace
 <web-workspace-root>/<game-slug>/<game-slug>.zip
 ```
 
-The zip must contain the playable game files, including `play.html`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. If the zip cannot be created and verified, stop; do not return HTML files, HTML links, source-code blocks, or fake paths.
+The zip must contain exactly the three playable game source files: `index.html`, `styles.css`, and `script.js`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. Do not create, describe, link, or deliver any extra browser entry file. If the zip cannot be created and verified, stop; do not return HTML files, HTML links, source-code blocks, or fake paths.
 
 The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the StoryClaw reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path, and never place game output in the independent host workspace just because it is writable; place game output only in the web page workspace root reported by it.
 
@@ -82,7 +82,7 @@ node scripts/build-test-prompt.mjs your-case-name
 
 The preferred delivery artifact is now a zip file in the generated game folder.
 
-Create `play.html` and package the source files:
+Package the three source files:
 
 ```bash
 node html-game-agent/scripts/package-game.mjs <web-workspace-root>/meteor-dodge
@@ -93,6 +93,5 @@ The package contains:
 - `index.html`
 - `styles.css`
 - `script.js`
-- `play.html`
 
-Give the user the generated zip path and tell them to unzip it, then open `play.html`.
+Give the user the generated zip path and tell them to download it, unzip it, then open `index.html`. Do not return an HTML entry link as the delivery artifact.
