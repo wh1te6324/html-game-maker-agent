@@ -6,6 +6,7 @@
   "tagline": "Turns game ideas into polished, playable HTML mini games.",
   "description": "An agent that designs and builds self-contained HTML, CSS, and JavaScript mini games. It focuses on playable mechanics, responsive layouts, clear controls, and quick iteration from a user's idea to a working browser game.",
   "category": "engineering-development",
+  "skills": ["workspace-reporter"],
   "minOpenClawVersion": "2026.3.1",
   "avatarUrl": null
 }

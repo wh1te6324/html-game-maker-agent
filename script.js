@@ -2,7 +2,7 @@ import {
   buildAgentRequest,
   callOpenAICompatible,
   createMockGame,
-  extractHtml
+  formatAgentResponse
 } from "./agent-plugin.js";
 
 const canvas = document.querySelector("#gameCanvas");
@@ -254,6 +254,14 @@ const renderGeneratedHtml = (html, title = "Generated Game") => {
   stageTitle.textContent = title;
 };
 
+const renderAgentResponse = (modelText) => {
+  gamePreview.srcdoc = formatAgentResponse(modelText);
+  gamePreview.hidden = false;
+  canvas.hidden = true;
+  stageLabel.textContent = "Agent zip response";
+  stageTitle.textContent = "Zip Delivery";
+};
+
 const showDemo = () => {
   gamePreview.hidden = true;
   gamePreview.srcdoc = "";
@@ -288,22 +296,21 @@ const generateWithAgent = async () => {
 
   generateButton.disabled = true;
   generateButton.textContent = "Generating...";
-  setLog("Calling model with HTML Game Maker context...");
+  setLog("Calling model with zip-only HTML Game Maker context...");
 
   try {
     localStorage.setItem("gameAgentEndpoint", endpoint);
     localStorage.setItem("gameAgentModel", model);
     localStorage.setItem("gameAgentKey", key);
     const modelText = await callOpenAICompatible({ endpoint, apiKey: key, model, prompt });
-    const html = extractHtml(modelText);
-    renderGeneratedHtml(html, "Generated Game");
-    setLog("Generated game rendered into the left preview area.");
+    renderAgentResponse(modelText);
+    setLog("Agent response received. Use the returned zip path; standalone HTML is not a valid delivery artifact.");
   } catch (error) {
     console.error(error);
     setLog(error.message);
   } finally {
     generateButton.disabled = false;
-    generateButton.textContent = "Generate into game area";
+    generateButton.textContent = "Request zip package";
   }
 };
 

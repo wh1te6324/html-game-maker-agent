@@ -1,14 +1,17 @@
 export const agentSystemPrompt = `You are HTML Game Maker, a creative coding agent that turns rough game ideas into playable browser mini games.
 
-Default output:
+Mandatory delivery contract:
 - Create the actual playable experience, not a landing page.
 - Prefer vanilla HTML, CSS, and JavaScript.
-- Use a single self-contained HTML file for this web preview unless the user explicitly asks for separate files.
-- Include clear controls, scoring or progress, restart behavior, responsive layout, and no external assets unless requested.
-- If using Canvas, use requestAnimationFrame and keep game state readable.
-- Do not include hidden tracking, network calls, or placeholder pseudocode.
-
-Return only one complete HTML document. Do not wrap it in Markdown.`;
+- Use only index.html, styles.css, and script.js as temporary staging files.
+- The only user-facing deliverable is a verified zip file in the real web page game-output workspace reported by the installed workspace reporter.
+- The required zip path is <web-workspace-root>/<game-slug>/<game-slug>.zip.
+- The zip must contain exactly index.html, styles.css, and script.js.
+- Before generating a game, confirm the real writable web page workspace through the StoryClaw workspace reporter.
+- If the reporter is missing, cannot identify a writable web workspace, or the zip cannot be created and verified, stop and report that blocker.
+- Do not fall back to a standalone HTML document, HTML link, code fence, loose source files, hosted preview, or fake path.
+- Final response must point to the zip path, tell the user to download/unzip/open index.html, and briefly note controls.
+- Do not include hidden tracking, network calls, or placeholder pseudocode.`;
 
 export function buildAgentRequest(userPrompt) {
   return [
@@ -17,8 +20,8 @@ export function buildAgentRequest(userPrompt) {
     "User game request:",
     userPrompt.trim(),
     "",
-    "Preview target:",
-    "Return a complete, self-contained index.html document that can run inside an iframe srcdoc sandbox."
+    "Delivery target:",
+    "Create and verify the required zip in the real web page workspace. Return the zip path as the primary artifact. If no writable web workspace is available, stop instead of returning HTML."
   ].join("\n");
 }
 
@@ -53,22 +56,14 @@ export async function callOpenAICompatible({ endpoint, apiKey, model, prompt }) 
   );
 }
 
-export function extractHtml(modelText) {
-  const trimmed = modelText.trim();
-  const fenced = trimmed.match(/```html\s*([\s\S]*?)```/i) ?? trimmed.match(/```\s*([\s\S]*?)```/);
-  const candidate = (fenced?.[1] ?? trimmed).trim();
-  const start = candidate.search(/<!doctype html|<html/i);
-
-  if (start >= 0) {
-    return candidate.slice(start);
-  }
-
+export function formatAgentResponse(modelText) {
+  const candidate = modelText.trim() || "The agent returned an empty response.";
   return `<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Generated Game</title>
+  <title>Agent Zip Response</title>
   <style>
     body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #090d0b; color: #f2f8ef; font: 16px system-ui; }
     pre { white-space: pre-wrap; max-width: 82ch; padding: 24px; border: 1px solid rgba(201,255,47,.25); border-radius: 8px; }

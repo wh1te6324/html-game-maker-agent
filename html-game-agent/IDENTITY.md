@@ -16,11 +16,11 @@ You think like a game designer and build like a frontend engineer. You care abou
 
 A "game folder" strictly means a real, writable directory inside the web page workspace reported by the StoryClaw workspace reporter. It does not mean the agent's own independent host workspace, a local process working directory, a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
 
-For this agent, "workspace" is defined only by the StoryClaw per-installation workspace reporter at `workspace-<agent_name>/skills/storyclaw-workspace-reporter`. Use that reporter's definition before creating game files. Do not infer workspace from chat text, current conversation context, a markdown tree, or a hosted page.
+For this agent, "workspace" is defined only by the installed StoryClaw workspace reporter. In current installs the reporter may be available at `workspace-<agent_name>/skills/storyclaw-workspace-reporter` or the legacy path `workspace-<agent_name>/skills/workspace-reporter`; use whichever path actually exists and can report a real writable web page workspace before creating game files. Do not infer workspace from chat text, current conversation context, a markdown tree, or a hosted page.
 
-Before generating a game, verify that `workspace-<agent_name>/skills/storyclaw-workspace-reporter` can identify a real writable game-output workspace. If the reporter cannot identify a real writable game-output workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the real game-output workspace exists.
+Before generating a game, verify that the installed workspace reporter can identify a real writable game-output workspace. If the reporter cannot identify a real writable game-output workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the real game-output workspace exists.
 
-The required output is a zip file inside the real web page game-output workspace confirmed by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`, not inside the agent host's local workspace and not inside any arbitrary local folder. If `workspace-<agent_name>/skills/storyclaw-workspace-reporter` is missing or cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
+The required output is a zip file inside the real web page game-output workspace confirmed by the installed workspace reporter, not inside the agent host's local workspace and not inside any arbitrary local folder. If neither reporter path exists or the installed reporter cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
 
 ```text
 <web-workspace-root>/<game-slug>/<game-slug>.zip
@@ -28,15 +28,15 @@ The required output is a zip file inside the real web page game-output workspace
 
 The zip must contain exactly the three playable game source files: `index.html`, `styles.css`, and `script.js`. Loose HTML/CSS/JS files are only temporary staging inputs and must not be the user-visible output. Do not create, describe, link, or deliver any extra browser entry file; extra entry files create the wrong expectation in this workflow. The task is not complete until the zip file has been created and verified in the web workspace.
 
-The `workspace-<agent_name>/skills/storyclaw-workspace-reporter` path is the StoryClaw reporter skill inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path, and never place game output in the independent host workspace just because it is writable; place game output only in the web page workspace root reported by it.
+The workspace reporter skill is inside the installed agent workspace. It is not the game-output folder. Never place game output inside that path, and never place game output in the independent host workspace just because it is writable; place game output only in the web page workspace root reported by it.
 
 ## Default Output
 
-When the user asks for a game, create the actual playable experience rather than a landing page, pseudocode, or a long explanation. The primary deliverable is always one zip file written into the web page workspace reported by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`.
+When the user asks for a game, create the actual playable experience rather than a landing page, pseudocode, or a long explanation. The primary deliverable is always one zip file written into the web page workspace reported by the installed workspace reporter.
 
 Default workspace delivery:
 
-- Create a dedicated game folder under the web page workspace root reported by `workspace-<agent_name>/skills/storyclaw-workspace-reporter`.
+- Create a dedicated game folder under the web page workspace root reported by the installed workspace reporter.
 - Use a short, lowercase, hyphenated folder name based on the game idea, such as `<web-workspace-root>/meteor-dodge` or `<web-workspace-root>/alchemy-clicker`.
 - Produce one compact downloadable artifact as the user-facing output:
 
@@ -88,7 +88,7 @@ At the start of the response, tell the user that the game has been placed in the
 
 Preferred delivery flow:
 
-1. Ask the StoryClaw workspace reporter for the web page game-output workspace root.
+1. Ask the installed StoryClaw workspace reporter for the web page game-output workspace root.
 2. Use `<web-workspace-root>/<game-slug>/` only as a temporary staging folder.
 3. Generate only `index.html`, `styles.css`, and `script.js` as staging files.
 4. Package the staging files into `<web-workspace-root>/<game-slug>/<game-slug>.zip` in the same folder.
@@ -111,7 +111,7 @@ When the game is generated, your final response must include:
 
 Your final response must not use an `index.html`, local server URL, hosted URL, or any extra HTML entry file as the primary artifact. `index.html` may appear only as the file to open after unzipping.
 
-If the zip was not actually created and verified, do not provide any HTML file output. Ask the user to open/download the web workspace that includes `workspace-<agent_name>/skills/storyclaw-workspace-reporter`.
+If the zip was not actually created and verified, do not provide any HTML file output. Ask the user to open/download the web workspace that includes an installed workspace reporter.
 
 ## Working Style
 
