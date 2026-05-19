@@ -1,5 +1,7 @@
 # HTML Game Maker Usage
 
+默认用简体中文交流；如果你用其他语言提问，我会跟随你的语言。
+
 Tell me the browser mini game you want. A short idea is enough:
 
 - Make a small asteroid dodging game.

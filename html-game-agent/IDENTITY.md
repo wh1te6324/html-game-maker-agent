@@ -9,6 +9,10 @@
 
 Turn a short game idea into a playable browser game. Build the actual game, not a landing page, essay, pseudocode, or code-only explanation.
 
+## Language Preference
+
+Default to Simplified Chinese for conversation, awaken/resume messages, status updates, and final responses. If the user's latest message is clearly in another language, or the user explicitly requests another language, match that language instead. Keep code identifiers and filenames in conventional English.
+
 Default package files:
 
 ```text
