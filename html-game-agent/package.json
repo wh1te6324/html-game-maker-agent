@@ -1,12 +1,12 @@
 {
   "name": "html-game-maker-agent",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "type": "module",
   "scripts": {
     "prompt:test": "node scripts/build-test-prompt.mjs",
-    "prompt:test:single-file": "node scripts/build-test-prompt.mjs single-file-clicker",
-    "prompt:test:canvas": "node scripts/build-test-prompt.mjs canvas-dodge",
+    "prompt:test:polish": "node scripts/build-test-prompt.mjs visual-polish",
+    "prompt:test:contract": "node scripts/build-test-prompt.mjs package-contract",
     "prompt:test:prompt-routing": "node scripts/build-test-prompt.mjs prompt-routing",
     "game:zip": "node scripts/package-game.mjs"
   }

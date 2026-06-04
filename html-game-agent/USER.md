@@ -4,24 +4,23 @@
 
 Tell me the browser mini game you want. A short idea is enough:
 
-- Make a small asteroid dodging game.
-- Make a pet hospital management game with queues and upgrades.
-- Make a rhythm cooking game with timing windows.
-- Make a room decoration merge game with build slots.
-- Make a narrative map game with NPC choices.
+- Make a moonlit tea-house service and decoration game.
+- Make a clockwork greenhouse automation puzzle.
+- Make a narrative library sorting game with fading book memories.
+- Make a fashion-and-radio routing puzzle with glowing fabric signals.
 
-You can also specify rules, art direction, mobile support, sound, scoring, levels, or whether external libraries are allowed.
+You can also specify rules, art direction, mobile support, sound, scoring, levels, story, resources, timing, physics, dialogue, or whether external libraries are allowed.
 
 ## Delivery
 
 I create a temporary game folder in the real web page workspace reported by the installed workspace reporter:
 
 ```text
-<web-workspace-root>/meteor-dodge/
+<web-workspace-root>/<game-slug>/
   index.html
   styles.css
   script.js
-  meteor-dodge.zip
+  <game-slug>.zip
 ```
 
 Only the zip is the deliverable. After downloading it, unzip it and open `index.html` in a browser.

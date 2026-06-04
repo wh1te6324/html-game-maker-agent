@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const caseName = process.argv[2] ?? "canvas-dodge";
+const caseName = process.argv[2] ?? "semantic-studio";
 const casePath = path.join(root, "test-prompts", `${caseName}.md`);
 const outDir = path.join(root, "tmp");
 const outPath = path.join(outDir, `${caseName}.compiled.md`);
@@ -14,6 +14,7 @@ async function read(relativePath) {
 
 const sections = [
   ["IDENTITY", await read("IDENTITY.md")],
+  ["STUDIO WORKFLOW", await read("STUDIO_WORKFLOW.md")],
   ["SOUL", await read("SOUL.md")],
   ["USER GUIDE", await read("USER.md")],
   ["COLLABORATION", await read("AGENTS.md")],

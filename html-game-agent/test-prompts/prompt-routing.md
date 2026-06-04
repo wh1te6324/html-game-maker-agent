@@ -1,14 +1,15 @@
 # Test Prompt: Prompt Routing Variety
 
-Create a browser mini game called "Chef Beat Service".
+Create a browser mini game called "Clockwork Conservatory".
 
 Requirements:
 
-- It must be a restaurant rhythm and service-management game, not a meteor dodge game.
-- Customers arrive with dish orders, and the player hits timed beat prompts to cook and serve.
-- Include at least three customer patience states, combo scoring, missed-beat penalties, and a win/loss condition.
-- Support keyboard and touch.
-- Use Canvas or DOM, but do not use external CDNs, images, or hosted assets.
-- Prepare only `index.html`, `styles.css`, and `script.js` in `<web-workspace-root>/chef-beat-service/`.
-- Package those three files into `<web-workspace-root>/chef-beat-service/chef-beat-service.zip`.
+- It is a plant-care automation puzzle with gears, watering routes, sunlight mirrors, and growth timing.
+- The core loop must involve arranging devices, watching plant states change, and correcting bottlenecks.
+- Do not turn it into a generic movement, avoidance, shooter, lane, or target-click game.
+- Include at least four plant states, two device types, resource or timing pressure, visible cause-and-effect feedback, and restart.
+- The visual language should use brass mechanisms, glasshouse panels, seed cards, water beads, and soft botanical colors.
+- Support keyboard and touch or pointer.
+- Prepare only `index.html`, `styles.css`, and `script.js` in `<web-workspace-root>/clockwork-conservatory/`.
+- Package those three files into `<web-workspace-root>/clockwork-conservatory/clockwork-conservatory.zip`.
 - Final response must output the zip path plus a short download/unzip/open instruction.

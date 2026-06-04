@@ -1,16 +1,15 @@
 # HTML Game Maker Agent
 
-This repository contains a TalentHub-ready agent for generating polished HTML mini games.
+This repository contains a TalentHub-ready agent for generating polished, prompt-native HTML mini games.
 
 ## Current Version
 
-`0.3.0` updates the agent for studio-style semantic game generation:
+`0.4.0` integrates a lightweight Claude-Code-Game-Studios-style generation pipeline:
 
-- Prompt-driven requests are no longer narrowed into a default game category pool.
-- The user's dialog-box request is treated as the source of truth for mechanics, theme, controls, win/loss rules, and visual direction.
-- Default arcade scaffolds are used only as browser-native implementation support, not as replacements for the requested concept.
-- A short internal studio pass now maps each prompt through Creative Director, Game Designer, Systems Designer, Level/UX Designer, and QA Lead roles before coding.
-- Runtime structure is chosen from semantics: queue/service, rhythm/timing, build/decorate, quest/dialogue, lane/field, board/card, physics, or open-field logic as appropriate.
+- Prompt-driven requests are no longer narrowed into a default category pool.
+- A compact studio pass runs before coding: Creative Director, Game Designer, Systems Designer, Level/UX Designer, Art Director, Gameplay Programmer, and QA Lead.
+- Runtime structure is chosen from semantic player verbs, entities, state, HUD, fail pressure, and progression instead of fixed genre categories.
+- Each game must include a mini art bible, prompt-specific entities, polished UI, responsive controls, and a reachable restart/end state.
 - The StoryClaw workspace reporter and zip-only delivery rule remain mandatory.
 
 ## Workspace Zip Delivery Rule
@@ -21,7 +20,7 @@ For this agent, "workspace" is defined only by the installed StoryClaw workspace
 
 Before generating a game, verify that the installed workspace reporter can identify a real writable game-output workspace. If the reporter cannot identify a real writable game-output workspace, stop and tell the user to download or open a workspace first. Do not generate code, links, fake paths, or partial output until the real game-output workspace exists.
 
-The required output is a zip file inside the real web page game-output workspace confirmed by the installed workspace reporter, not inside the agent host's local workspace and not inside any arbitrary local folder. If neither reporter path exists or the installed reporter cannot confirm a web page workspace, stop and require the user to download or open a workspace that includes the reporter before generating anything:
+The required output is a zip file inside the real web page game-output workspace confirmed by the installed workspace reporter:
 
 ```text
 <web-workspace-root>/<game-slug>/<game-slug>.zip
@@ -35,6 +34,7 @@ The workspace reporter skill is inside the installed agent workspace. It is not 
 
 - `manifest.json` - TalentHub metadata.
 - `IDENTITY.md` - Required core identity prompt.
+- `STUDIO_WORKFLOW.md` - Studio-style prompt-to-game pipeline adapted from Claude Code Game Studios.
 - `USER.md` - User-facing usage guide.
 - `SOUL.md` - Personality, principles, and boundaries.
 - `AGENTS.md` - Collaboration guidance for multi-agent workflows.
@@ -65,6 +65,8 @@ Before publishing a version update, run:
 ```bash
 npm run prompt:test
 npm run prompt:test:prompt-routing
+npm run prompt:test:polish
+npm run prompt:test:contract
 ```
 
 ## Test The Prompt
@@ -81,16 +83,9 @@ If npm is not available, run the script directly:
 node scripts/build-test-prompt.mjs
 ```
 
-The compiled prompt will be written to `tmp/canvas-dodge.compiled.md`.
+The compiled prompt will be written to `tmp/semantic-studio.compiled.md`.
 
-Other included cases:
-
-```bash
-npm run prompt:test:single-file
-npm run prompt:test:canvas
-```
-
-Paste the compiled prompt into the model or agent runtime you want to evaluate. Add more scenarios by creating Markdown files in `test-prompts/`, then run:
+Add more scenarios by creating Markdown files in `test-prompts/`, then run:
 
 ```bash
 node scripts/build-test-prompt.mjs your-case-name
@@ -98,12 +93,12 @@ node scripts/build-test-prompt.mjs your-case-name
 
 ## Package A Downloadable Game
 
-The preferred delivery artifact is now a zip file in the generated game folder.
+The preferred delivery artifact is always a zip file in the generated game folder.
 
 Package the three source files:
 
 ```bash
-node html-game-agent/scripts/package-game.mjs <web-workspace-root>/meteor-dodge
+node html-game-agent/scripts/package-game.mjs <web-workspace-root>/<game-slug>
 ```
 
 The package contains:
