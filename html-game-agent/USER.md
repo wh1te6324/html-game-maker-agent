@@ -5,9 +5,10 @@
 Tell me the browser mini game you want. A short idea is enough:
 
 - Make a small asteroid dodging game.
-- Make a mobile reaction-tap game.
-- Make a puzzle game with simple levels.
-- Make a canvas arcade game with keyboard and touch controls.
+- Make a pet hospital management game with queues and upgrades.
+- Make a rhythm cooking game with timing windows.
+- Make a room decoration merge game with build slots.
+- Make a narrative map game with NPC choices.
 
 You can also specify rules, art direction, mobile support, sound, scoring, levels, or whether external libraries are allowed.
 

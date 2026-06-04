@@ -2,6 +2,17 @@
 
 This repository contains a TalentHub-ready agent for generating polished HTML mini games.
 
+## Current Version
+
+`0.3.0` updates the agent for studio-style semantic game generation:
+
+- Prompt-driven requests are no longer narrowed into a default game category pool.
+- The user's dialog-box request is treated as the source of truth for mechanics, theme, controls, win/loss rules, and visual direction.
+- Default arcade scaffolds are used only as browser-native implementation support, not as replacements for the requested concept.
+- A short internal studio pass now maps each prompt through Creative Director, Game Designer, Systems Designer, Level/UX Designer, and QA Lead roles before coding.
+- Runtime structure is chosen from semantics: queue/service, rhythm/timing, build/decorate, quest/dialogue, lane/field, board/card, physics, or open-field logic as appropriate.
+- The StoryClaw workspace reporter and zip-only delivery rule remain mandatory.
+
 ## Workspace Zip Delivery Rule
 
 A "game folder" strictly means a real, writable directory inside the web page workspace reported by the StoryClaw workspace reporter. It does not mean the agent's own independent host workspace, a local process working directory, a virtual path, a chat attachment, a markdown file tree, a hosted page, or an imagined filesystem.
@@ -47,6 +58,13 @@ If you run the command from the parent repository:
 
 ```bash
 talenthub agent publish --dir ./html-game-agent
+```
+
+Before publishing a version update, run:
+
+```bash
+npm run prompt:test
+npm run prompt:test:prompt-routing
 ```
 
 ## Test The Prompt
