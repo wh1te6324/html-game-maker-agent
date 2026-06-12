@@ -8,8 +8,10 @@ This repository contains a TalentHub-ready agent for generating polished, prompt
 
 - Prompt-driven requests are no longer narrowed into a default category pool.
 - A compact studio pass runs before coding: Creative Director, Game Designer, Systems Designer, Level/UX Designer, Art Director, Gameplay Programmer, and QA Lead.
+- Long-form studio commands are defaulted for one-shot generation: onboarding, brainstorming, art bible, asset inventory, systems map, prototype, implementation sprint, and smoke check all happen internally from a single user sentence.
 - Runtime structure is chosen from semantic player verbs, entities, state, HUD, fail pressure, and progression instead of fixed genre categories.
 - Each game must include a mini art bible, prompt-specific entities, polished UI, responsive controls, and a reachable restart/end state.
+- Each game must include an asset inventory and visible production choices: layered scene depth, self-contained generated props/entities/icons, particles or transitions, and prompt-specific UI materials.
 - The StoryClaw workspace reporter and zip-only delivery rule remain mandatory.
 
 ## Workspace Zip Delivery Rule

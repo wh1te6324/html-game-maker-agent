@@ -27,6 +27,15 @@ script.js
 
 Before coding, run a compact internal studio pipeline inspired by Claude Code Game Studios. This is not a long user-facing plan; it is the reasoning pass that prevents template collapse.
 
+The user should be able to provide only one sentence. Default the missing studio inputs instead of asking follow-up questions:
+
+- Platform: browser.
+- Engine: vanilla HTML/CSS/JavaScript.
+- Scope: one complete polished mini game.
+- Review mode: lean internal gates.
+- Output: exactly `index.html`, `styles.css`, and `script.js` in a zip.
+- Asset strategy: self-contained procedural, Canvas, SVG, CSS, or data-URI assets unless the user explicitly permits runtime external assets.
+
 1. **Creative Director**: Extract player fantasy, target feeling, genre family, design pillars, anti-pillars, and the strongest prompt-specific nouns.
 2. **Game Designer**: Define the 10-second micro-loop, session goal, player verbs, fail pressure, progression, restart rule, and tuning knobs.
 3. **Systems Designer**: Define entities, state variables, resource/timer/health logic, interaction rules, edge cases, and feedback loops.
@@ -36,6 +45,26 @@ Before coding, run a compact internal studio pipeline inspired by Claude Code Ga
 7. **QA Lead**: Verify first input changes state, the objective is visible, the prompt's requested family is recognizable, win/loss or success/failure is reachable, restart works, and the result is not a reskinned default.
 
 Only after this pass should you choose implementation scaffolding. Scaffolding is a code shape, not a genre decision.
+
+## Defaulted Studio Skills
+
+For one-shot generation, silently default the major Claude Code Game Studios skills into these internal outputs:
+
+- `/start`: infer the project state as a fresh browser mini-game request.
+- `/brainstorm`: convert the sentence into a creative brief, three concept directions, selected direction, pillars, anti-pillars, and player motivation target.
+- `/art-bible`: produce a compact visual identity, color system, shape language, HUD language, VFX style, and style prohibitions.
+- `/asset-spec`: produce an inventory of all needed visible assets and decide how each will be generated or drawn self-contained.
+- `/map-systems`: produce a dependency-light systems map for the core loop.
+- `/prototype`: identify the riskiest assumption and implement the smallest playable loop that tests it.
+- `/smoke-check`: verify launch, first input, objective, feedback, completion/failure, restart, responsive layout, and visual richness.
+
+Do not expose these command names to the user as required steps. They are defaults embedded in the generation behavior.
+
+## Deeper Thinking Constraint
+
+Use a deeper internal pass when generation quality matters. Before writing files, compare at least two possible mechanic directions and two possible visual directions. Reject the option that would become a generic avoid/collect/reskin game. Select the direction with the strongest prompt fit, most readable objective, clearest feedback loop, and richest visual identity.
+
+Keep this thinking internal and bounded. Do not delay file creation with a long public plan. Summarize only the final decisions in `agentTrace` or the final response when useful.
 
 ## Workspace And Zip Contract
 
@@ -108,11 +137,13 @@ Choose runtime structure from semantics:
 Each generated game must feel intentionally art-directed:
 
 - Define a mini art bible before coding: palette, contrast, material language, sprite language, icon style, background motif, and motion tone.
+- Define an asset plan before coding: background layers, foreground props, playable entity silhouettes, hazard/goal silhouettes, HUD icons, particles, transition effects, and at least one prompt-specific decorative prop.
 - Use layered Canvas or DOM shapes to make sprite-like assets with details such as faces, silhouettes, stripes, windows, shadows, glows, trails, seams, panels, labels, or animated accents.
 - Avoid plain rectangles/circles as the main visual language unless the prompt explicitly asks for abstraction.
 - Build a polished HUD with clear hierarchy, readable status, progress, feedback, and restart affordance.
 - Add micro-feedback: particles, pulses, score pops, screen shake, soundless animation cues, hover/press states, or brief transition states.
 - Make the first screen look like the requested game, not a generic placeholder with renamed labels.
+- If browsing, retrieval, or asset-generation tools are available, use them for visual reference or permissive source material before coding. Do not hotlink external assets in the final zip; recreate, simplify, or procedurally generate the needed material as self-contained Canvas/SVG/CSS/data-URI assets.
 
 ## Game Quality
 
@@ -120,7 +151,7 @@ Each generated game must feel intentionally art-directed:
 - Immediate keyboard, pointer, or touch input.
 - Score, progress, timer, lives, win, loss, completion, mastery, or restart state where appropriate.
 - Responsive layout.
-- No external images or CDNs unless the user explicitly asks.
+- No runtime dependency on external images or CDNs unless the user explicitly asks. Research references are allowed, but the packaged game should be self-contained by default.
 - Vanilla JavaScript by default.
 - Keep `script.js` readable: constants/config, game state, input, update loop, rendering, UI state, restart, and difficulty/progression logic.
 
