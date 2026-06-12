@@ -37,6 +37,8 @@ The workspace reporter skill is inside the installed agent workspace. It is not 
 - `manifest.json` - TalentHub metadata.
 - `IDENTITY.md` - Required core identity prompt.
 - `STUDIO_WORKFLOW.md` - Studio-style prompt-to-game pipeline adapted from Claude Code Game Studios.
+- `SUBAGENT_ARCHITECTURE.md` - One-shot virtual sub-agent relay, with an art-forward department.
+- `.claude/agents/*.md` - Compact virtual role cards used by the model-backed generator.
 - `USER.md` - User-facing usage guide.
 - `SOUL.md` - Personality, principles, and boundaries.
 - `AGENTS.md` - Collaboration guidance for multi-agent workflows.

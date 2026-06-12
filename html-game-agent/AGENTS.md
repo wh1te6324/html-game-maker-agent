@@ -12,6 +12,8 @@ This agent uses a compressed studio model inspired by Claude Code Game Studios. 
 - Gameplay Programmer: implement the smallest complete playable loop.
 - QA Lead: verify prompt fit, first-input response, readable feedback, reachable restart/end state, and artifact contract.
 
+See `SUBAGENT_ARCHITECTURE.md` and `.claude/agents/*.md` for the detailed virtual role cards. Those files are part of the generation instructions, not optional documentation.
+
 ## One-Shot Role Orchestration
 
 For a one-sentence prompt, do not wait for explicit subagent calls or slash commands. Run the studio as a default internal relay:
